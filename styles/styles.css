@@ -1,48 +1,48 @@
 body {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: flex-start;
-  width: 100vw;
-  height: 100vh;
-  border: 1px solid red;
-  margin: 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100vw;
+    height: 100vh;
+    border: 1px solid red;
+    margin: 0;
 }
 
 .titles {
-  width: 30vw;
-  height: 100%;
-  border: 1px solid blue;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
+    width: 30vw;
+    height: 100%;
+    border: 1px solid blue;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .search {
-  width: 100%;
-  height: 10%;
-  background-color: grey;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-around;
+    width: 100%;
+    height: 10%;
+    background-color: grey;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
 }
 
 .search-bar {
-  width: 70%;
-  height: 5vh;
+    width: 70%;
+    height: 5vh;
 }
 
 .search-results {
-  background-color: #d1ded1;
-  height: 80%;
-  width: 100%;
-  overflow: scroll;
+    background-color: #d1ded1;
+    height: 80%;
+    width: 100%;
+    overflow: scroll;
 }
 
 .search-footer {
-  width: 100%;
-  height: 10%;
-  background-color: grey;
+    width: 100%;
+    height: 10%;
+    background-color: grey;
 }

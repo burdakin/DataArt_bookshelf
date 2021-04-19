@@ -26,9 +26,12 @@ function renderTitle() {
         let titleElement = document.createElement('div');
         titleElement.setAttribute('id', `title${i}`);
         document.getElementById('search-results').appendChild(titleElement);
-        let newTitle = `<input type="radio" class="title-text" id="title-text${i}" name="titles" value="${queryObj.docs[i].cover_i}">
+        let newTitle = `<input type="radio" class="title-text" id="title-text${i}" name="titles" value="${queryObj.docs[i].edition_key}">
             <label for="title-text${i}">${title.title}</label>`;
         document.getElementById(`title${i}`).innerHTML = newTitle;
-        console.log(title);
     }
+}
+
+function addFooterButtons (/*текущая страница*/) {
+    //Функция добавления кнопок следующей и предыдущей страницы в футере результатов
 }
