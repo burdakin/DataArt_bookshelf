@@ -1,5 +1,6 @@
 var queryObj = null;
 var idArray = [];
+var pageIndex = 1;
 
 document.addEventListener('DOMContentLoaded', footerLogic);
 
@@ -15,8 +16,8 @@ async function getQuery(query, page) {
     return await result.json();
 }
 
-async function getList(page) {
-    this.page = page;
+async function getList() {
+    this.page = pageIndex;
     let query = new Input().input;
     let data = await getQuery(query, page);
     queryObj = await data;
@@ -43,27 +44,27 @@ function renderTitle() {
             <label for="title-text${i}">${title.title}</label>`;
         document.getElementById(`title${i}`).innerHTML = newTitle;
     }
-    let found = queryObj.numFound;
-    document.getElementById('found').innerHTML = `${found} books were found`;
+    document.getElementById('found').innerHTML = `${queryObj.numFound} books were found`;
     document.getElementById('search-results').addEventListener('click', eventRadioHandler);
 }
 
 function footerLogic() {
     document.getElementById('back').addEventListener('click', () => {
-        if (getList().page > 2) {
-            getList(this.page - 1)
-                .then(() => {
-                    this.page -= 1
-                })
-        } else {
+        if (pageIndex <= 1) {
             alert('Already first page')
-        }
-        ;
-    });
+        } else {
+            pageIndex--
+            getList()
+                .then(() => {
+                    pageIndex = pageIndex;
+                })
+        };
+    })
     document.getElementById('fwd').addEventListener('click', () => {
-        getList(page + 1)
+        pageIndex++
+        getList()
             .then(() => {
-                this.page += 1
+                pageIndex=pageIndex;
             })
     });
 }
@@ -92,6 +93,5 @@ class Book {
         this.fText = fText;
         this.firstPublished = firstPublished;
         this.yrsPublished = yrsPublished;
-
     }
 }
