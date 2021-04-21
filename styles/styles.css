@@ -46,3 +46,10 @@ body {
     height: 10%;
     background-color: grey;
 }
+
+.footer-btns {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+}

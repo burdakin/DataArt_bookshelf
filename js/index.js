@@ -1,5 +1,7 @@
 var queryObj = null;
 
+document.addEventListener('DOMContentLoaded', footerLogic);
+
 class Input {
     constructor() {
         this.input = document.getElementById('search-input').value.toString().toLowerCase();
@@ -12,12 +14,13 @@ async function getQuery(query, page) {
     return await result.json();
 }
 
-    async function getList(page) {
-        let query = new Input().input;
-        let data = await getQuery(query, page);
-        queryObj = await data;
-        await console.log(data);
-        await renderTitle();
+async function getList(page) {
+    this.page = page;
+    let query = new Input().input;
+    let data = await getQuery(query, page);
+    queryObj = await data;
+    await console.log(data);
+    await renderTitle();
 }
 
 
@@ -37,28 +40,24 @@ function renderTitle() {
             <label for="title-text${i}">${title.title}</label>`;
         document.getElementById(`title${i}`).innerHTML = newTitle;
     }
-    addFooterButtons();
+    let found = queryObj.numFound;
+    document.getElementById('found').innerHTML = `${found} books were found`;
 }
 
-function addFooterButtons() {
-    let page = (queryObj.start / 100) - 1;
-    let back = document.createElement('button');
-    back.setAttribute('id', 'back');
-    back.setAttribute('class', 'back-btn');
-    document.getElementById('search-footer').appendChild(back);
-    document.getElementById('back').innerHTML = 'Вперед';
-
-    document.getElementById('search-footer').addEventListener('click', (e) => {
-        console.log(e);
-
-        if (e.target.id == 'back') {
-            getList(page + 1).then();
-        }
-    })
-
+function footerLogic() {
+    document.getElementById('back').addEventListener('click', () => {
+        if (getList().page > 2) {
+            getList(this.page - 1)
+                .then(() => {
+                    this.page -= 1
+                })
+        } else {alert('Already first page')};
+    });
+    document.getElementById('fwd').addEventListener('click', () => {
+        getList(page + 1)
+            .then(() => {
+                this.page += 1
+            })
+    });
 }
 
-/*
-TODO - Проверить все кавычки;
-
- */
