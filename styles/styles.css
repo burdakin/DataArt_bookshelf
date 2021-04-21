@@ -53,3 +53,11 @@ body {
     align-items: center;
     justify-content: space-around;
 }
+
+.title-text {
+    width: 5%;
+}
+
+label {
+    width: 95%;
+}
