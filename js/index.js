@@ -3,12 +3,8 @@ var idArray = [];
 var pageIndex = 1;
 var selectedBook = null;
 
-// Глобальные переменные – норм?
-// Многие переменные имеют одно и то же название
-// Добавить реакцию на ok
-// Решить вопрос с undefined в датах публикаций
-
 document.addEventListener('DOMContentLoaded', footerLogic);
+document.addEventListener('DOMContentLoaded',renderList);
 
 class Input {
     constructor() {
@@ -105,7 +101,7 @@ function eventRadioHandler(event) {
 
 class Book {
     constructor(title, subtitle, author, langs, fText, firstPublished, yrsPublished) {
-        this.Title = title;
+        this.title = title;
         this.subtitle = subtitle;
         this.author = author;
         this.langs = langs;
@@ -124,28 +120,28 @@ class Book {
         renderTitle.setAttribute('id', 'selected_title');
         renderTitle.setAttribute('class', 'selected_title');
         document.getElementById('container').appendChild(renderTitle);
-        document.getElementById('selected_title').innerHTML = `Title: ${this.Title}`;
+        renderTitle.innerHTML = `Title: ${this.title}`;
 
         if (this.subtitle !== undefined) {
             let renderSub = document.createElement('div');
             renderSub.setAttribute('id', 'selected_sub');
             renderSub.setAttribute('class', 'selected_sub');
             document.getElementById('container').appendChild(renderSub);
-            document.getElementById('selected_sub').innerHTML = `Subtitle: ${this.subtitle}`;
+            renderSub.innerHTML = `Subtitle: ${this.subtitle}`;
         }
 
         let renderAuthor = document.createElement('div');
         renderAuthor.setAttribute('id', 'selected_auth');
         renderAuthor.setAttribute('class', 'selected_auth');
         document.getElementById('container').appendChild(renderAuthor);
-        document.getElementById('selected_auth').innerHTML = `Author: ${this.author}`;
+        renderAuthor.innerHTML = `Author: ${this.author}`;
 
         if (this.langs !== undefined) {
             let renderLangs = document.createElement('div');
             renderLangs.setAttribute('id', 'selected_langs');
             renderLangs.setAttribute('class', 'selected_langs');
             document.getElementById('container').appendChild(renderLangs);
-            document.getElementById('selected_langs').innerHTML = `This book is available in following languages: ${this.langs}`;
+            renderLangs.innerHTML = `This book is available in following languages: ${this.langs}`;
         }
 
         let renderText = document.createElement('div');
@@ -153,9 +149,9 @@ class Book {
         renderText.setAttribute('class', 'selected_text');
         document.getElementById('container').appendChild(renderText);
         if (this.fText == true) {
-            document.getElementById('selected_text').innerHTML = 'Full text is available';
+            renderText.innerHTML = 'Full text is available';
         } else if (this.fText == false) {
-            document.getElementById('selected_text').innerHTML = 'Full text is unavailable';
+            renderText.innerHTML = 'Full text is unavailable';
         }
         ;
 
@@ -164,7 +160,7 @@ class Book {
             renderFP.setAttribute('id', 'selected_fp');
             renderFP.setAttribute('class', 'selected_fp');
             document.getElementById('container').appendChild(renderFP);
-            document.getElementById('selected_fp').innerHTML = `First published: ${this.firstPublished}`;
+            renderFP.innerHTML = `First published: ${this.firstPublished}`;
         }
 
         if (this.yrsPublished !== null || undefined) {
@@ -172,10 +168,68 @@ class Book {
             renderYrs.setAttribute('id', 'selected_yrs');
             renderYrs.setAttribute('class', 'selected_yrs');
             document.getElementById('container').appendChild(renderYrs);
-            document.getElementById('selected_yrs').innerHTML = `Was published in ${this.yrsPublished}`;
+            renderYrs.innerHTML = `Was published in ${this.yrsPublished}`;
         }
+
+        let addToReadList = document.createElement('button');
+        addToReadList.setAttribute('id', 'add-btn');
+        addToReadList.setAttribute('class', 'add-btn');
+        document.getElementById('container').appendChild(addToReadList);
+        addToReadList.innerHTML = 'Add to read list';
+        addToReadList.addEventListener('click', addBtn);
     }
 }
 
 // ----------------------------------------------- ТУТ ПОШЛА ЧАСТЬ ПРО ТУРИДЛИСТ --------------------------------------
 
+var localIndex = localStorage.length;
+
+function addToReadList() {
+    selectedBook.read = false;
+    localStorage.setItem(localStorage.length.toString(), JSON.stringify(selectedBook));
+    renderList();
+    localIndex++;
+}
+
+function addBtn() {
+    if (localStorage.length == 0) {
+        localIndex = 0;
+        addToReadList();
+    } else if (localIndex > 0) {
+        let count = 0;
+        for (let i = 0; i < localStorage.length; i++) {
+            let parse = JSON.parse(localStorage[i]);
+            if (parse.title == selectedBook.title) {
+                count++;
+            }
+        }
+        if (count == 0) {
+            addToReadList();
+        }
+    }
+}
+
+function renderList() {
+    for (let i=0; i<localStorage.length;i++) {
+        if (JSON.parse(localStorage[i]).read == false) {
+            renderWishes(i);
+        } else if (localStorage[i].read== true) {
+            renderRead(i)
+        }
+    }
+}
+
+function renderWishes(index) {
+    let wishBook = document.createElement('div');
+    wishBook.setAttribute('id',`wish${index}`);
+    wishBook.setAttribute('class','wish');
+    wishBook.innerHTML = `
+    <p class='wish-title'>${JSON.parse(localStorage[index]).title} (${JSON.parse(localStorage[index]).langs})</p>
+    <p class='subtitle'>${JSON.parse(localStorage[index]).subtitle}</p>
+    <p class='author'>By ${JSON.parse(localStorage[index]).author}</p>
+    <button id='mark' class="button">Mark as read</button>
+    <button id='del' class="button">Remove from list</button>
+    `;
+    document.getElementById('wishlist').appendChild(wishBook);
+
+}
