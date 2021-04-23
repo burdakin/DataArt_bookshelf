@@ -52,7 +52,8 @@ function renderTitle() {
     idArray = [];
     if (document.getElementById('search-results') !== '') {
         document.getElementById('search-results').innerHTML = ''
-    };
+    }
+    ;
     for (let i = 0; i < queryObj.docs.length; i++) {
         let title = new BookTitle(queryObj.docs[i].title);
         let lang = () => {
@@ -60,7 +61,8 @@ function renderTitle() {
                 return `(${queryObj.docs[i].language.toString()})`;
             } else {
                 return '';
-            };
+            }
+            ;
         }
 
         let identificator = queryObj.docs[i].key.toString(); //
@@ -150,34 +152,20 @@ class Book {
         parentDiv.setAttribute('id', 'container');
         document.getElementById('select').appendChild(parentDiv)
 
-
-        let renderTitle = document.createElement('div');
-        renderTitle.setAttribute('id', 'selected_title');
-        renderTitle.setAttribute('class', 'selected_title');
-        document.getElementById('container').appendChild(renderTitle);
-        renderTitle.innerHTML = `<p>${this.title}</p>`;
-
-        if (this.subtitle !== undefined) {
-            let renderSub = document.createElement('div');
-            renderSub.setAttribute('id', 'selected_sub');
-            renderSub.setAttribute('class', 'selected_sub');
-            document.getElementById('container').appendChild(renderSub);
-            renderSub.innerHTML = `Subtitle: ${this.subtitle}`;
+        function renderField(id, idToAppend, element, innerH) {
+            if (selectedBook[element] !== undefined) {
+                let elem = document.createElement('div');
+                elem.setAttribute('id', id);
+                elem.setAttribute('class', id);
+                document.getElementById(idToAppend).appendChild(elem);
+                elem.innerHTML = innerH;
+            }
         }
 
-        let renderAuthor = document.createElement('div');
-        renderAuthor.setAttribute('id', 'selected_auth');
-        renderAuthor.setAttribute('class', 'selected_auth');
-        document.getElementById('container').appendChild(renderAuthor);
-        renderAuthor.innerHTML = `Author: ${this.author}`;
-
-        if (this.langs !== undefined) {
-            let renderLangs = document.createElement('div');
-            renderLangs.setAttribute('id', 'selected_langs');
-            renderLangs.setAttribute('class', 'selected_langs');
-            document.getElementById('container').appendChild(renderLangs);
-            renderLangs.innerHTML = `This book is available in following languages: ${this.langs}`;
-        }
+        renderField('selected_title', 'container', 'title', `<p>${this.title}</p>`);
+        renderField('selected_sub', 'container', 'subtitle', `Subtitle: ${this.subtitle}`);
+        renderField('selected_auth', 'container', 'author', `Author: ${this.author}`);
+        renderField('selected_langs', 'container', 'langs', `This book is available in following languages: ${this.langs}`);
 
         let renderText = document.createElement('div');
         renderText.setAttribute('id', 'selected_text');
@@ -187,24 +175,10 @@ class Book {
             renderText.innerHTML = 'Full text is available';
         } else if (this.fText == false) {
             renderText.innerHTML = 'Full text is unavailable';
-        }
-        ;
+        };
 
-        if (this.firstPublished !== null || undefined) {
-            let renderFP = document.createElement('div');
-            renderFP.setAttribute('id', 'selected_fp');
-            renderFP.setAttribute('class', 'selected_fp');
-            document.getElementById('container').appendChild(renderFP);
-            renderFP.innerHTML = `First published: ${this.firstPublished}`;
-        }
-
-        if (this.yrsPublished !== null || undefined) {
-            let renderYrs = document.createElement('div');
-            renderYrs.setAttribute('id', 'selected_yrs');
-            renderYrs.setAttribute('class', 'selected_yrs');
-            document.getElementById('container').appendChild(renderYrs);
-            renderYrs.innerHTML = `Was published in ${this.yrsPublished}`;
-        }
+        renderField('selected_fp', 'container', 'firstPublished', `First published: ${this.firstPublished}`);
+        renderField('selected_yrs', 'container', 'yrsPublished', `Was published in ${this.yrsPublished}`);
 
         let addToReadList = document.createElement('button');
         addToReadList.setAttribute('id', 'add-btn');
@@ -261,16 +235,27 @@ function renderList() {
             renderRead(key)
         }
     }
-}
+};
 
 
 function renderWishes(index) {
+    let unknown = (element) => {
+        if (JSON.parse(localStorage[index])[element] !== undefined) {
+            if (element == 'langs') {
+                return `(${JSON.parse(localStorage[index]).langs})`;
+            } else {
+                return JSON.parse(localStorage[index])[element]
+            }
+        } else {
+            return '';
+        }
+    };
     let wishBook = document.createElement('div');
     wishBook.setAttribute('id', `wish${index}`);
     wishBook.setAttribute('class', 'wish');
     wishBook.innerHTML = `
-    <p class='wish-title'>${JSON.parse(localStorage[index]).title} (${JSON.parse(localStorage[index]).langs})</p>
-    <p class='subtitle'>${JSON.parse(localStorage[index]).subtitle}</p>
+    <p class='wish-title'>${JSON.parse(localStorage[index]).title} ${unknown('langs')}</p>
+    <p class='subtitle'>${unknown('subtitle')}</p>
     <p class='author'>By ${JSON.parse(localStorage[index]).author}</p>
     <button id= mark${index} data-id=${index} class="button">Mark as read</button>
     <button id= del${index} data-id=${index} class="button">Remove from list</button>
@@ -288,25 +273,6 @@ function renderWishes(index) {
             deleteBook(index);
         }
     });
-}
-
-function clearList() {
-    let read = document.getElementById('read');
-    let wish = document.getElementById('wishlist');
-    if (wish !== null || read !== null) {
-        wish.remove();
-        read.remove();
-    }
-    let newRead = document.createElement('div');
-    newRead.setAttribute('class', 'read');
-    newRead.setAttribute('id', 'read');
-    document.getElementById('done').appendChild(newRead);
-
-    let newWish = document.createElement('div');
-    newWish.setAttribute('class', 'wishlist');
-    newWish.setAttribute('id', 'wishlist');
-    document.getElementById('wish').appendChild(newWish);
-
 }
 
 function renderRead(index) {
@@ -331,3 +297,22 @@ function deleteBook(index) {
     localStorage.removeItem(index);
     renderList();
 };
+
+function clearList() {
+    let read = document.getElementById('read');
+    let wish = document.getElementById('wishlist');
+    if (wish !== null || read !== null) {
+        wish.remove();
+        read.remove();
+    }
+    let newRead = document.createElement('div');
+    newRead.setAttribute('class', 'read');
+    newRead.setAttribute('id', 'read');
+    document.getElementById('done').appendChild(newRead);
+
+    let newWish = document.createElement('div');
+    newWish.setAttribute('class', 'wishlist');
+    newWish.setAttribute('id', 'wishlist');
+    document.getElementById('wish').appendChild(newWish);
+
+}
