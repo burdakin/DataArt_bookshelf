@@ -5,12 +5,12 @@ var selectedBook = null;
 
 document.addEventListener('DOMContentLoaded', footerLogic);
 document.addEventListener('DOMContentLoaded', renderList);
-document.addEventListener('DOMContentLoaded', ()=> {
+document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('search-input').addEventListener('keyup', (e) => {
-    if (e.keyCode === 13) {
-        e.preventDefault();
-        document.getElementById('search-btn').click();
-    }
+        if (e.keyCode === 13) {
+            e.preventDefault();
+            document.getElementById('search-btn').click();
+        }
     })
 });
 
@@ -34,8 +34,15 @@ async function getQuery(query, page) {
 
 async function getList() {
     this.page = pageIndex;
-    let query = new Input().input;
-    let data = await getQuery(query, page);
+    let query = () => {
+        if (new Input().input == '') {
+            alert('Type something to start searching:)');
+            return '';
+        } else {
+            return new Input().input
+        }
+    };
+    let data = await getQuery(query(), this.page);
     queryObj = await data;
     await console.log(data);
     await renderTitle();
@@ -45,14 +52,22 @@ function renderTitle() {
     idArray = [];
     for (let i = 0; i < queryObj.docs.length; i++) {
         let title = new BookTitle(queryObj.docs[i].title);
+        let lang = () => {
+            if (queryObj.docs[i].language !== undefined) {
+                return `(${queryObj.docs[i].language.toString()})`;
+            } else {
+                return ''
+            }
+            ;
+        }
         let identificator = queryObj.docs[i].key.toString(); //
         idArray.push(identificator);
         let titleElement = document.createElement('div');
         titleElement.setAttribute('id', `title${i}`);
-        titleElement.setAttribute('class','title-item');
+        titleElement.setAttribute('class', 'title-item');
         document.getElementById('search-results').appendChild(titleElement);
         let newTitle = `<input type="radio" class="title-text" id="title-text${i}" name="titles" value="${identificator}">
-            <label for="title-text${i}"><p>${title.title}</p></label>`;
+            <label for="title-text${i}"><p>${title.title} ${lang()}</p></label>`;
         document.getElementById(`title${i}`).innerHTML = newTitle;
     }
     document.getElementById('found').innerHTML = `${queryObj.numFound} books were found`;
@@ -197,7 +212,8 @@ var localIndex = () => {
         if (max < Number(key)) {
             max = Number(key);
         }
-    } return max+1;
+    }
+    return max + 1;
 };
 
 function addToReadList() {
