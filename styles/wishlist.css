@@ -1,0 +1,35 @@
+.list {
+    width: 25vw;
+    height: 100%;
+    border-left: 2px solid rgb(220 203 226);
+}
+
+.list--wish {
+    height: 60%;
+}
+
+.wishlist {
+    height: 90%;
+    overflow: scroll;
+}
+
+.list-done {
+    height: 40%;
+}
+
+.read {
+    overflow: scroll;
+    height: 90%;
+}
+
+.list--wish h2 {
+    margin: 0;
+    height: 10%;
+    width: 70%;
+}
+
+.list-done h3 {
+    margin: 0;
+    height: 10%;
+    width: 70%;
+}

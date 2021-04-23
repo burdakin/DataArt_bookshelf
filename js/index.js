@@ -5,6 +5,14 @@ var selectedBook = null;
 
 document.addEventListener('DOMContentLoaded', footerLogic);
 document.addEventListener('DOMContentLoaded', renderList);
+document.addEventListener('DOMContentLoaded', ()=> {
+    document.getElementById('search-input').addEventListener('keyup', (e) => {
+    if (e.keyCode === 13) {
+        e.preventDefault();
+        document.getElementById('search-btn').click();
+    }
+    })
+});
 
 class Input {
     constructor() {
@@ -41,9 +49,10 @@ function renderTitle() {
         idArray.push(identificator);
         let titleElement = document.createElement('div');
         titleElement.setAttribute('id', `title${i}`);
+        titleElement.setAttribute('class','title-item');
         document.getElementById('search-results').appendChild(titleElement);
         let newTitle = `<input type="radio" class="title-text" id="title-text${i}" name="titles" value="${identificator}">
-            <label for="title-text${i}">${title.title}</label>`;
+            <label for="title-text${i}"><p>${title.title}</p></label>`;
         document.getElementById(`title${i}`).innerHTML = newTitle;
     }
     document.getElementById('found').innerHTML = `${queryObj.numFound} books were found`;
@@ -120,7 +129,7 @@ class Book {
         renderTitle.setAttribute('id', 'selected_title');
         renderTitle.setAttribute('class', 'selected_title');
         document.getElementById('container').appendChild(renderTitle);
-        renderTitle.innerHTML = `Title: ${this.title}`;
+        renderTitle.innerHTML = `<p>${this.title}</p>`;
 
         if (this.subtitle !== undefined) {
             let renderSub = document.createElement('div');
