@@ -39,7 +39,7 @@ async function getList() {
             alert('Type something to start searching:)');
             return '';
         } else {
-            return new Input().input
+            return new Input().input;
         }
     };
     let data = await getQuery(query(), this.page);
@@ -59,9 +59,8 @@ function renderTitle() {
             if (queryObj.docs[i].language !== undefined) {
                 return `(${queryObj.docs[i].language.toString()})`;
             } else {
-                return ''
-            }
-            ;
+                return '';
+            };
         }
 
         let identificator = queryObj.docs[i].key.toString(); //
@@ -76,6 +75,14 @@ function renderTitle() {
     }
     document.getElementById('found').innerHTML = `${queryObj.numFound} books were found`;
     document.getElementById('search-results').addEventListener('click', eventRadioHandler);
+    document.getElementById('footer-btns').style.display = 'flex';
+    if (pageIndex == 1) {
+        document.getElementById('back').style.opacity = '30%';
+        document.getElementById('back').style.pointerEvents = 'none';
+    } else {
+        document.getElementById('back').style.opacity = '100%';
+        document.getElementById('back').style.pointerEvents = 'auto';
+    }
 }
 
 function footerLogic() {
@@ -138,7 +145,7 @@ class Book {
         this.yrsPublished = yrsPublished;
     }
 
-    render() { //переделать через цикл и массив
+    render() {
         let parentDiv = document.createElement('section');
         parentDiv.setAttribute('id', 'container');
         document.getElementById('select').appendChild(parentDiv)
