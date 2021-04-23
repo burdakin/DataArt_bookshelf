@@ -20,8 +20,9 @@
 }
 
 .search-bar {
-    width: 60%;
+    width: 18vw;
     height: 6vh;
+    padding-left: 3%;
 }
 
 .search-btn {
@@ -31,6 +32,8 @@
     height: 6vh;
     color: white;
     border: none;
+    font-family: 'Montserrat';
+    font-weight: 500;
 }
 
 .search-results {
@@ -59,10 +62,12 @@
 .back-btn, .fwd-btn {
     border-radius: 4px;
     background-color: rgb(48, 186, 231);
-    width: 25%;
-    height: 55%;
+    width: 10vw;
+    height: 6vh;
     border: none;
     color: white;
+    font-family: 'Montserrat';
+    font-weight: 500;
 }
 
 .title-item {
@@ -93,18 +98,15 @@ label p {
     padding-left: 2vh;
     padding-top: 3vh;
     margin: 0 auto;
-}
-
-.select {
-    width: 45vw;
-    height: 100%;
-    background-color: rgb(231, 241, 248);
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: flex-start;
+    font-family: 'Montserrat';
+    font-weight: 100;
 }
 
 #found {
+    width: 25%;
+    word-wrap: break-word;
+    font-family: 'Montserrat';
+    font-weight: 100;
     color: white;
+    font-size: 0.8em;
 }

@@ -1,35 +1,87 @@
 .list {
     width: 25vw;
     height: 100%;
-    border-left: 2px solid rgb(220 203 226);
 }
 
 .list--wish {
-    height: 60%;
+    height: 50vh;
 }
 
 .wishlist {
-    height: 90%;
+    height: 73%;
     overflow: scroll;
+    border-bottom: 3px solid rgb(220 203 226);
+    border-left: 2px solid rgb(220 203 226);
+}
+
+.wish {
+    border: 10px solid rgb(255 255 255);
+    border-radius: 18px;
+    background-color: rgb(255, 221, 153);
+    font-family: 'Montserrat';
+    font-weight: 300;
+    color: rgb(50, 60, 96);
+    line-height: 1.3;
+    text-align: center;
 }
 
 .list-done {
-    height: 40%;
+    height: 50vh;
+    display: flex;
+    flex-direction: column-reverse;
+    border-left: 2px solid rgb(220 203 226);
 }
 
 .read {
     overflow: scroll;
-    height: 90%;
+    height: 78%;
 }
 
 .list--wish h2 {
+    height: 13vh;
+    width: 25vw;
+    background-color: rgb(135, 80, 156);
     margin: 0;
-    height: 10%;
-    width: 70%;
+    text-align: center;
+    font-size: 2em;
+    font-family: 'Montserrat';
+    color: rgb(255, 255, 255);
+    line-height: 13vh;
+    font-weight: 400;
 }
 
 .list-done h3 {
     margin: 0;
-    height: 10%;
-    width: 70%;
+    height: 11vh;
+    width: 100%;
+    font-family: 'Montserrat';
+    color: rgb(255, 255, 255);
+    background-color: #3c5499;
+    border-radius: 4px;
+    text-align: center;
+    font-size: 1.2em;
+    line-height: 11vh;
+    font-weight: 400;
+}
+
+.button {
+    background-color: rgb(215, 70, 128);
+    color: white;
+    width: 37%;
+    height: 7vh;
+    font-family: 'Montserrat';
+    font-weight: 200;
+    margin-bottom: 2vh;
+    border-radius: 6px;
+    border: none;
+}
+
+.readItem {
+    border: 8px solid white;
+    border-radius: 16px;
+    background-color: rgb(231, 241, 248);
+    text-align: center;
+    font-family: Montserrat;
+    font-weight: 200;
+    color: #464646;
 }

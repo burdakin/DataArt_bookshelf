@@ -8,3 +8,7 @@ body {
     margin: 0;
 }
 
+button:hover {
+    box-shadow: 0 0 15px rgba(225,170,192,70);
+    opacity: 90%;
+}
