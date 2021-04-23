@@ -4,7 +4,7 @@ var pageIndex = 1;
 var selectedBook = null;
 
 document.addEventListener('DOMContentLoaded', footerLogic);
-document.addEventListener('DOMContentLoaded',renderList);
+document.addEventListener('DOMContentLoaded', renderList);
 
 class Input {
     constructor() {
@@ -182,25 +182,32 @@ class Book {
 
 // ----------------------------------------------- ТУТ ПОШЛА ЧАСТЬ ПРО ТУРИДЛИСТ --------------------------------------
 
-var localIndex = localStorage.length;
+var localIndex = () => {
+    let max = 0;
+    for (let key in localStorage) {
+        if (max < Number(key)) {
+            max = Number(key);
+        }
+    } return max+1;
+};
 
 function addToReadList() {
     selectedBook.read = false;
-    localStorage.setItem(localStorage.length.toString(), JSON.stringify(selectedBook));
+    localStorage.setItem(localIndex().toString(), JSON.stringify(selectedBook));
     renderList();
-    localIndex++;
 }
 
 function addBtn() {
     if (localStorage.length == 0) {
-        localIndex = 0;
         addToReadList();
-    } else if (localIndex > 0) {
+    } else if (localIndex() > 0) {
         let count = 0;
-        for (let i = 0; i < localStorage.length; i++) {
-            let parse = JSON.parse(localStorage[i]);
-            if (parse.title == selectedBook.title) {
-                count++;
+        for (let i in localStorage) {
+            if (localStorage.hasOwnProperty(i)) {
+                let parse = JSON.parse(localStorage[i]);
+                if (parse.title == selectedBook.title) {
+                    count++;
+                }
             }
         }
         if (count == 0) {
@@ -210,26 +217,81 @@ function addBtn() {
 }
 
 function renderList() {
-    for (let i=0; i<localStorage.length;i++) {
-        if (JSON.parse(localStorage[i]).read == false) {
-            renderWishes(i);
-        } else if (localStorage[i].read== true) {
-            renderRead(i)
+    clearList();
+    for (let key in localStorage) {
+        if (JSON.parse(localStorage[key]).read == false) {
+            renderWishes(key);
+        } else if (JSON.parse(localStorage[key]).read == true) {
+            renderRead(key)
         }
     }
 }
 
+
 function renderWishes(index) {
     let wishBook = document.createElement('div');
-    wishBook.setAttribute('id',`wish${index}`);
-    wishBook.setAttribute('class','wish');
+    wishBook.setAttribute('id', `wish${index}`);
+    wishBook.setAttribute('class', 'wish');
     wishBook.innerHTML = `
     <p class='wish-title'>${JSON.parse(localStorage[index]).title} (${JSON.parse(localStorage[index]).langs})</p>
     <p class='subtitle'>${JSON.parse(localStorage[index]).subtitle}</p>
     <p class='author'>By ${JSON.parse(localStorage[index]).author}</p>
-    <button id='mark' class="button">Mark as read</button>
-    <button id='del' class="button">Remove from list</button>
+    <button id= mark${index} data-id=${index} class="button">Mark as read</button>
+    <button id= del${index} data-id=${index} class="button">Remove from list</button>
     `;
     document.getElementById('wishlist').appendChild(wishBook);
+    document.getElementById('wishlist').addEventListener('click', (e) => {
+        if (e.target.innerHTML == 'Mark as read') {
+            index = e.target.dataset.id;
+            markRead(index);
+        }
+    });
+    document.getElementById('wishlist').addEventListener('click', (e) => {
+        if (e.target.innerHTML == 'Remove from list') {
+            index = e.target.dataset.id;
+            deleteBook(index);
+        }
+    });
+}
+
+function clearList() {
+    let read = document.getElementById('read');
+    let wish = document.getElementById('wishlist');
+    if (wish !== null || read !== null) {
+        wish.remove();
+        read.remove();
+    }
+    let newRead = document.createElement('div');
+    newRead.setAttribute('class', 'read');
+    newRead.setAttribute('id', 'read');
+    document.getElementById('done').appendChild(newRead);
+
+    let newWish = document.createElement('div');
+    newWish.setAttribute('class', 'wishlist');
+    newWish.setAttribute('id', 'wishlist');
+    document.getElementById('wish').appendChild(newWish);
 
 }
+
+function renderRead(index) {
+    let readBook = document.createElement('div');
+    readBook.setAttribute('id', `readItem${index}`);
+    readBook.setAttribute('class', 'readItem');
+    readBook.innerHTML = `
+    <p class='read-title'>${JSON.parse(localStorage[index]).title} (${JSON.parse(localStorage[index]).langs})</p>
+    <p class='read-author'>By ${JSON.parse(localStorage[index]).author}</p>
+    `;
+    document.getElementById('read').appendChild(readBook);
+}
+
+function markRead(index) {
+    let obj = JSON.parse(localStorage[index]);
+    obj.read = true;
+    localStorage.setItem(index.toString(), JSON.stringify(obj));
+    renderList();
+}
+
+function deleteBook(index) {
+    localStorage.removeItem(index);
+    renderList();
+};

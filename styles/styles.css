@@ -92,6 +92,11 @@ label {
     height: 40%;
 }
 
+.read {
+    overflow: scroll;
+    height: 90%;
+}
+
 .list--wish h2 {
     margin: 0;
     height: 10%;
