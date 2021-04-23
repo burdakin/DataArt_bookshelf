@@ -50,6 +50,9 @@ async function getList() {
 
 function renderTitle() {
     idArray = [];
+    if (document.getElementById('search-results') !== '') {
+        document.getElementById('search-results').innerHTML = ''
+    };
     for (let i = 0; i < queryObj.docs.length; i++) {
         let title = new BookTitle(queryObj.docs[i].title);
         let lang = () => {
@@ -60,6 +63,7 @@ function renderTitle() {
             }
             ;
         }
+
         let identificator = queryObj.docs[i].key.toString(); //
         idArray.push(identificator);
         let titleElement = document.createElement('div');

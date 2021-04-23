@@ -30,6 +30,9 @@
     color: rgb(60, 71, 97);
     line-height: 1.7;
     text-align: center;
+    width: 44vw;
+    word-wrap: break-word;
+    overflow: auto;
 }
 
 .add-btn {
@@ -41,4 +44,5 @@
     font-size: 100%;
     font-family: "Myriad Pro";
     border: none;
+    margin-top: 3vh;
 }
