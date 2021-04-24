@@ -21,7 +21,8 @@ class BookTitle {
 }
 
 export async function getList() {
-    this.page = pageIndex;
+    let loader = document.getElementById('search-results');
+    loader.innerHTML = 'Wait for it!';
     let query = () => {
         if (new Input().input == '') {
             alert('Type something to start searching:)');
@@ -30,9 +31,10 @@ export async function getList() {
             return new Input().input;
         }
     };
-    let data = await getQuery(query(), this.page);
+    let data = await getQuery(query(), pageIndex);
     queryObj = await data;
     await console.log(data);
+    loader.innerHTML = '';
     await renderTitle();
 }
 
@@ -313,4 +315,3 @@ export function clearWishList() {
         }
     }
 }
-
