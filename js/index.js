@@ -1,18 +1,12 @@
+import {getQuery} from "./api.js";
+import {listener} from "./listeners.js";
+
 var queryObj = null;
 var idArray = [];
 var pageIndex = 1;
 var selectedBook = null;
 
-document.addEventListener('DOMContentLoaded', footerLogic);
-document.addEventListener('DOMContentLoaded', renderList);
-document.addEventListener('DOMContentLoaded', () => {
-    document.getElementById('search-input').addEventListener('keyup', (e) => {
-        if (e.keyCode === 13) {
-            e.preventDefault();
-            document.getElementById('search-btn').click();
-        }
-    })
-});
+listener();
 
 class Input {
     constructor() {
@@ -26,13 +20,7 @@ class BookTitle {
     }
 }
 
-async function getQuery(query, page) {
-    let url = `https://openlibrary.org/search.json?q=${query}&page=${page}`;
-    let result = await fetch(url);
-    return await result.json();
-}
-
-async function getList() {
+export async function getList() {
     this.page = pageIndex;
     let query = () => {
         if (new Input().input == '') {
@@ -87,7 +75,7 @@ function renderTitle() {
     }
 }
 
-function footerLogic() {
+export function footerLogic() {
     document.getElementById('back').addEventListener('click', () => {
         if (pageIndex <= 1) {
             alert('Already first page')
@@ -175,7 +163,8 @@ class Book {
             renderText.innerHTML = 'Full text is available';
         } else if (this.fText == false) {
             renderText.innerHTML = 'Full text is unavailable';
-        };
+        }
+        ;
 
         renderField('selected_fp', 'container', 'firstPublished', `First published: ${this.firstPublished}`);
         renderField('selected_yrs', 'container', 'yrsPublished', `Was published in ${this.yrsPublished}`);
@@ -226,7 +215,7 @@ function addBtn() {
     }
 }
 
-function renderList() {
+export function renderList() {
     clearList();
     for (let key in localStorage) {
         if (JSON.parse(localStorage[key]).read == false) {
@@ -236,7 +225,6 @@ function renderList() {
         }
     }
 };
-
 
 function renderWishes(index) {
     let unknown = (element) => {
@@ -314,5 +302,15 @@ function clearList() {
     newWish.setAttribute('class', 'wishlist');
     newWish.setAttribute('id', 'wishlist');
     document.getElementById('wish').appendChild(newWish);
-
 }
+
+export function clearWishList() {
+    if ((document.getElementById('wishlist') !== undefined) || (document.getElementById('read')) !== undefined) {
+        let answer = window.confirm('Are you sure?');
+        if (answer == true) {
+            localStorage.clear();
+            renderList();
+        }
+    }
+}
+
