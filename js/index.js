@@ -21,8 +21,7 @@ class BookTitle {
 }
 
 export async function getList() {
-    let loader = document.getElementById('search-results');
-    loader.innerHTML = 'Wait for it!';
+    loader();
     let query = () => {
         if (new Input().input == '') {
             alert('Type something to start searching:)');
@@ -34,7 +33,7 @@ export async function getList() {
     let data = await getQuery(query(), pageIndex);
     queryObj = await data;
     await console.log(data);
-    loader.innerHTML = '';
+    removeLoader();
     await renderTitle();
 }
 
@@ -314,4 +313,23 @@ export function clearWishList() {
             renderList();
         }
     }
+}
+
+function loader() {
+    let loaderSection = document.createElement('div');
+    loaderSection.setAttribute('id', 'load');
+    loaderSection.setAttribute('class', 'load');
+    loaderSection.innerHTML = 'Wait for it';
+    document.getElementById('app').appendChild(loaderSection);
+    let loader = document.getElementById('load');
+    loader.style.display = 'block';
+    loader.innerHTML = '<p class="load--text" id="load-text">Wait for it!</p>';
+    document.getElementById("body").style.zIndex = "-2";
+    document.getElementById("body").style.opacity = "60%";
+}
+
+function removeLoader() {
+    document.getElementById('load').remove();
+    document.getElementById("body").style.zIndex = "1";
+    document.getElementById("body").style.opacity = "100%";
 }

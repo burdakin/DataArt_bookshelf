@@ -1,44 +1,44 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="ru" id="app">
 <head>
     <meta charset="UTF-8">
     <title>Bookshelf</title>
-    <link rel="js/index.js">;
+    <link rel="js/index.js">
+    ;
     <script type="module" src="js/index.js"></script>
     <link rel="stylesheet" type="text/css" href="styles/styles.css">
 </head>
-<body>
-<section id="titles" class="titles">
-    <div class="search" id="search">
-        <input id="search-input" class="search-bar" placeholder="What are you looking for?">
-        <button type="submit" id="search-btn" class="search-btn">Search!</button>
-    </div>
-    <div class="search-results" id="search-results">
-    </div>
-    <div class="search-footer" id="search-footer">
-        <div id="footer-btns" class="footer-btns">
-            <button id="back" class="back-btn">Previous</button>
-            <p id="found" class="found"></p>
-            <button id="fwd" class="fwd-btn">Next</button>
+<body id="body" class="body">
+    <section id="titles" class="titles">
+        <div class="search" id="search">
+            <input id="search-input" class="search-bar" placeholder="What are you looking for?">
+            <button type="submit" id="search-btn" class="search-btn">Search!</button>
         </div>
-    </div>
-</section>
-<section id="select" class="select">
-</section>
-<section id="list" class="list">
-    <div id="wish" class="list--wish">
-        <div><h2>Want to read</h2></div>
-        <div class="wishlist" id="wishlist">
-
+        <div class="search-results" id="search-results">
         </div>
-    </div>
-    <button id="clear-btn" class="clear-btn">Clear this list</button>
-    <div class="list-done" id="done">
-        <div><h3>Already read</h3></div>
-        <div class="read" id="read">
-
+        <div class="search-footer" id="search-footer">
+            <div id="footer-btns" class="footer-btns">
+                <button id="back" class="back-btn">Previous</button>
+                <p id="found" class="found"></p>
+                <button id="fwd" class="fwd-btn">Next</button>
+            </div>
         </div>
-    </div>
-</section>
+    </section>
+    <section id="select" class="select">
+    </section>
+    <section id="list" class="list">
+        <div id="wish" class="list--wish">
+            <div><h2>Want to read</h2></div>
+            <div class="wishlist" id="wishlist">
+            </div>
+        </div>
+        <button id="clear-btn" class="clear-btn">Clear this list</button>
+        <div class="list-done" id="done">
+            <div><h3>Already read</h3></div>
+            <div class="read" id="read">
+            </div>
+        </div>
+    </section>
 </body>
+<!-- <div class="load" id="load"></div> -->
 </html>
