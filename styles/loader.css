@@ -1,10 +1,9 @@
 .load {
     display: none;
-    height: 10%;
+    height: 15vh;
     width: 30%;
-    background-color: #f75151;
-    border-radius: 4px;
-    border: 1px solid red;
+    background-color: rgba(235,125,75,0.2);
+    border-radius: 8px;
     position: absolute;
     left: 38%;
     top: 40%;
@@ -13,6 +12,10 @@
 }
 
 .load--text {
-    color: white;
-    font-size: 1em;
+    color: #3c4761;
+    font-size: 1.5em;
+    text-align: center;
+    font-family: 'Montserrat';
+    font-weight: 200;
+    line-height: 2em;
 }

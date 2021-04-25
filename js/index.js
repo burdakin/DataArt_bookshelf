@@ -22,6 +22,9 @@ class BookTitle {
 
 export async function getList() {
     loader();
+    var timer = setInterval(function () {
+        document.getElementById('load').style.backgroundColor = 'rgba(' + loaderColor() + ',' + loaderColor() + ',' + loaderColor() + ',0.5)';
+    }, 300);
     let query = () => {
         if (new Input().input == '') {
             alert('Type something to start searching:)');
@@ -34,6 +37,7 @@ export async function getList() {
     queryObj = await data;
     await console.log(data);
     removeLoader();
+    clearInterval(timer)
     await renderTitle();
 }
 
@@ -332,4 +336,9 @@ function removeLoader() {
     document.getElementById('load').remove();
     document.getElementById("body").style.zIndex = "1";
     document.getElementById("body").style.opacity = "100%";
+}
+
+function loaderColor() {
+    let n = Math.floor((Math.random() * 254) + 1);
+    return n;
 }
