@@ -1,6 +1,6 @@
 .load {
     display: none;
-    height: 15vh;
+    height: 13vh;
     width: 30%;
     background-color: rgba(235,125,75,0.2);
     border-radius: 8px;
@@ -16,6 +16,6 @@
     font-size: 1.5em;
     text-align: center;
     font-family: 'Montserrat';
-    font-weight: 200;
+    font-weight: 300;
     line-height: 2em;
 }
