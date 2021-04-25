@@ -84,7 +84,8 @@ export function footerLogic() {
     document.getElementById('back').addEventListener('click', () => {
         if (pageIndex <= 1) {
             alert('Already first page')
-        } else {
+        }
+        else {
             pageIndex--
             getList()
                 .then(() => {
