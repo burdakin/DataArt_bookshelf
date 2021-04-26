@@ -37,6 +37,7 @@ export function addBtn() {
 
 export function renderList() {
     clearList();
+    clearBtnStyle();
     for (let key in localStorage) {
         if (JSON.parse(localStorage[key]).read == false) {
             renderWishes(key);
@@ -131,5 +132,15 @@ export function clearWishList() {
             localStorage.clear();
             renderList();
         }
+    }
+}
+
+export function clearBtnStyle() {
+    if (localStorage.length == 0) {
+        document.getElementById("clear-btn").style.opacity = "60%";
+        document.getElementById("clear-btn").style.pointerEvents = "none";
+    } else {
+        document.getElementById("clear-btn").style.opacity = "100%";
+        document.getElementById("clear-btn").style.pointerEvents = "auto";
     }
 }
