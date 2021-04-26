@@ -7,5 +7,4 @@ export async function getQuery(query, page) {
         alert('Oops! Something went wrong:( \nCheck your connection and try again');
         console.log(e);
     }
-
 }

@@ -32,9 +32,7 @@ export async function getList() {
             return new Input().input;
         }
     };
-    let data = await getQuery(query(), pageIndex);
-    queryObj = await data;
-    await console.log(data);
+    queryObj = await getQuery(query(), pageIndex);
     removeLoader();
     clearInterval(timer)
     await renderTitle();
@@ -54,11 +52,15 @@ export function footerLogic() {
         ;
     })
     document.getElementById('fwd').addEventListener('click', () => {
-        pageIndex++
-        getList()
-            .then(() => {
-                pageIndex = pageIndex;
-            })
+        if ((pageIndex + 1) > (parseInt(queryObj.numfound / 100))) {
+            alert('Nothing else left');
+        } else {
+            pageIndex++;
+            getList()
+                .then(() => {
+                    pageIndex = pageIndex;
+                })
+        }
     });
 }
 
@@ -98,7 +100,7 @@ export function renderTitle() {
     } else {
         document.getElementById('back').style.opacity = '100%';
         document.getElementById('back').style.pointerEvents = 'auto';
-    }
+    } //ДОБАВИТЬ УСЛОВИЕ ДЛЯ ПОСЛЕДНЕЙ СТРАНИЦЫ
 }
 
 function eventRadioHandler(event) {
@@ -116,11 +118,11 @@ function eventRadioHandler(event) {
         let book = queryObj.docs[index];
         let publishDate = () => {
             if (book.publish_date !== undefined) {
-                return book.publish_date
+                return book.publish_date;
             } else {
-                return 'No information'
+                return 'No information';
             }
-        }
+        };
         let bookToDisplay = new Book(book.title, book.subtitle, book.author_name, book.language, book.has_fulltext, publishDate(), book.publish_year);
         selectedBook = bookToDisplay;
         console.log(selectedBook);
@@ -142,7 +144,7 @@ class Book {
     render() {
         let parentDiv = document.createElement('section');
         parentDiv.setAttribute('id', 'container');
-        document.getElementById('select').appendChild(parentDiv)
+        document.getElementById('select').appendChild(parentDiv);
 
         function renderField(id, cls, idToAppend, element, innerH) {
             if (selectedBook[element] !== undefined) {
@@ -154,9 +156,9 @@ class Book {
             }
         }
 
-        renderField('selected_title', 'select__selected_title',  'container', 'title', `<p>${this.title}</p>`);
+        renderField('selected_title', 'select__selected_title', 'container', 'title', `<p>${this.title}</p>`);
         renderField('selected_sub', 'select__selected_sub', 'container', 'subtitle', `Subtitle: ${this.subtitle}`);
-        renderField('selected_auth','select__selected_auth', 'container', 'author', `Author: ${this.author}`);
+        renderField('selected_auth', 'select__selected_auth', 'container', 'author', `Author: ${this.author}`);
         renderField('selected_langs', 'select__selected_langs', 'container', 'langs', `This book is available in following languages: ${this.langs}`);
 
         let renderText = document.createElement('div');
@@ -168,10 +170,9 @@ class Book {
         } else if (this.fText == false) {
             renderText.innerHTML = 'Full text is unavailable';
         }
-        ;
 
-        renderField('selected_fp','select__selected_fp', 'container', 'firstPublished', `First published: ${this.firstPublished}`);
-        renderField('selected_yrs','select__selected_yrs', 'container', 'yrsPublished', `Was published in ${this.yrsPublished}`);
+        renderField('selected_fp', 'select__selected_fp', 'container', 'firstPublished', `First published: ${this.firstPublished}`);
+        renderField('selected_yrs', 'select__selected_yrs', 'container', 'yrsPublished', `Was published in ${this.yrsPublished}`);
 
         let addToReadList = document.createElement('button');
         addToReadList.setAttribute('id', 'add-btn');

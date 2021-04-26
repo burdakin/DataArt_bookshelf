@@ -3,7 +3,7 @@ import {clearWishList, renderList} from "./wishlist.js";
 
 (function listener() {
     document.addEventListener('DOMContentLoaded', () => {
-        (function get () {
+        (function get() {
             document.getElementById('search-btn').addEventListener('click', getList);
         })();
         (function () {

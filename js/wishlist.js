@@ -44,7 +44,7 @@ export function renderList() {
             renderRead(key)
         }
     }
-};
+}
 
 export function renderWishes(index) {
     let unknown = (element) => {
@@ -52,7 +52,7 @@ export function renderWishes(index) {
             if (element == 'langs') {
                 return `(${JSON.parse(localStorage[index]).langs})`;
             } else {
-                return JSON.parse(localStorage[index])[element]
+                return JSON.parse(localStorage[index])[element];
             }
         } else {
             return '';
@@ -104,7 +104,7 @@ export function markRead(index) {
 export function deleteBook(index) {
     localStorage.removeItem(index);
     renderList();
-};
+}
 
 export function clearList() {
     let read = document.getElementById('read');

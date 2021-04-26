@@ -2,7 +2,7 @@ export function loader() {
     let loaderSection = document.createElement('div');
     loaderSection.setAttribute('id', 'load');
     loaderSection.setAttribute('class', 'load');
-    loaderSection.innerHTML = 'Wait for it';
+    loaderSection.innerHTML = 'Wait for it...';
     document.getElementById('app').appendChild(loaderSection);
     let loader = document.getElementById('load');
     loader.style.display = 'block';
@@ -18,6 +18,6 @@ export function removeLoader() {
 }
 
 export function loaderColor() {
-    let n = Math.floor((Math.random() * 254) + 1);
-    return n;
+    let colorCode = Math.floor((Math.random() * 254) + 1);
+    return colorCode;
 }
