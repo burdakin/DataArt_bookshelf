@@ -60,13 +60,13 @@ export function renderWishes(index) {
     };
     let wishBook = document.createElement('div');
     wishBook.setAttribute('id', `wish${index}`);
-    wishBook.setAttribute('class', 'wish');
+    wishBook.setAttribute('class', 'wishlist__wish-item');
     wishBook.innerHTML = `
-    <p class='wish-title'>${JSON.parse(localStorage[index]).title} ${unknown('langs')}</p>
-    <p class='subtitle'>${unknown('subtitle')}</p>
-    <p class='author'>By ${JSON.parse(localStorage[index]).author}</p>
-    <button id= mark${index} data-id=${index} class="button">Mark as read</button>
-    <button id= del${index} data-id=${index} class="button">Remove from list</button>
+    <p class='wishlist__wish-title'>${JSON.parse(localStorage[index]).title} ${unknown('langs')}</p>
+    <p class='wishlist__subtitle'>${unknown('subtitle')}</p>
+    <p class='wishlist__author'>By ${JSON.parse(localStorage[index]).author}</p>
+    <button id= mark${index} data-id=${index} class="wishlist__button">Mark as read</button>  
+    <button id= del${index} data-id=${index} class="wishlist__button">Remove from list</button>
     `;
     document.getElementById('wishlist').appendChild(wishBook);
     document.getElementById('wishlist').addEventListener('click', (e) => {
@@ -86,7 +86,7 @@ export function renderWishes(index) {
 export function renderRead(index) {
     let readBook = document.createElement('div');
     readBook.setAttribute('id', `readItem${index}`);
-    readBook.setAttribute('class', 'readItem');
+    readBook.setAttribute('class', 'done__read__readItem');
     readBook.innerHTML = `
     <p class='read-title'>${JSON.parse(localStorage[index]).title} (${JSON.parse(localStorage[index]).langs})</p>
     <p class='read-author'>By ${JSON.parse(localStorage[index]).author}</p>
@@ -114,12 +114,12 @@ export function clearList() {
         read.remove();
     }
     let newRead = document.createElement('div');
-    newRead.setAttribute('class', 'read');
+    newRead.setAttribute('class', 'done__read');
     newRead.setAttribute('id', 'read');
     document.getElementById('done').appendChild(newRead);
 
     let newWish = document.createElement('div');
-    newWish.setAttribute('class', 'wishlist');
+    newWish.setAttribute('class', 'list__wish__wishlist');
     newWish.setAttribute('id', 'wishlist');
     document.getElementById('wish').appendChild(newWish);
 }
