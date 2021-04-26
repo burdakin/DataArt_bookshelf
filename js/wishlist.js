@@ -65,18 +65,18 @@ export function renderWishes(index) {
     <p class='wishlist__wish-title'>${JSON.parse(localStorage[index]).title} ${unknown('langs')}</p>
     <p class='wishlist__subtitle'>${unknown('subtitle')}</p>
     <p class='wishlist__author'>By ${JSON.parse(localStorage[index]).author}</p>
-    <button id= mark${index} data-id=${index} class="wishlist__button">Mark as read</button>  
-    <button id= del${index} data-id=${index} class="wishlist__button">Remove from list</button>
+    <button id= mark${index} data-id=${index} data-button="read" class="wishlist__button">Mark as read</button>  
+    <button id= del${index} data-id=${index} data-button="del" class="wishlist__button">Remove from list</button>
     `;
     document.getElementById('wishlist').appendChild(wishBook);
     document.getElementById('wishlist').addEventListener('click', (e) => {
-        if (e.target.innerHTML == 'Mark as read') {
+        if (e.target.dataset.button == 'read') {
             index = e.target.dataset.id;
             markRead(index);
         }
     });
     document.getElementById('wishlist').addEventListener('click', (e) => {
-        if (e.target.innerHTML == 'Remove from list') {
+        if (e.target.dataset.button == 'del') {
             index = e.target.dataset.id;
             deleteBook(index);
         }
