@@ -4,7 +4,7 @@ export async function getQuery(query, page) {
         let result = await fetch(url);
         return await result.json();
     } catch (e) {
-        alert('Oops! Something went wrong:( \nCheck your connection and try again');
+        alert("Oops! Something went wrong:( \nCheck your connection and try again");
         console.log(e);
     }
 }
