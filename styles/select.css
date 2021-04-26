@@ -17,13 +17,13 @@
     justify-content: flex-start;
 }
 
-.selected_title {
+.select__selected_title {
     height: 13vh;
     width: 45vw;
     background-color: rgb(135, 80, 156);
 }
 
-.selected_title p {
+.select__selected_title p {
     font-size: 1.3em;
     width: 100%;
     font-family: 'Montserrat';
@@ -35,7 +35,7 @@
     margin-top: 3vh;
 }
 
-.selected_auth, .selected_text, .selected_fp, .selected_yrs, .selected_langs, .selected_sub {
+.select__selected_auth, .select__selected_text, .select__selected_fp, .select__selected_yrs, .select__selected_langs, .select__selected_sub {
     display: inline;
     font-size: 1.2em;
     font-family: "Montserrat";
@@ -48,7 +48,7 @@
     overflow: auto;
 }
 
-.add-btn {
+.select__add-btn {
     border-radius: 4px;
     background-color: rgb(23, 194, 164);
     width: 35%;

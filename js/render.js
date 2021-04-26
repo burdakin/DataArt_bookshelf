@@ -83,9 +83,9 @@ export function renderTitle() {
         idArray.push(identificator);
         let titleElement = document.createElement('div');
         titleElement.setAttribute('id', `title${i}`);
-        titleElement.setAttribute('class', 'title-item');
+        titleElement.setAttribute('class', 'titles__title-item');
         document.getElementById('search-results').appendChild(titleElement);
-        let newTitle = `<input type="radio" class="title-text" id="title-text${i}" name="titles" value="${identificator}">
+        let newTitle = `<input type="radio" class="titles__title-text" id="title-text${i}" name="titles" value="${identificator}">
             <label for="title-text${i}"><p>${title.title} ${lang()}</p></label>`;
         document.getElementById(`title${i}`).innerHTML = newTitle;
     }
@@ -144,24 +144,24 @@ class Book {
         parentDiv.setAttribute('id', 'container');
         document.getElementById('select').appendChild(parentDiv)
 
-        function renderField(id, idToAppend, element, innerH) {
+        function renderField(id, cls, idToAppend, element, innerH) {
             if (selectedBook[element] !== undefined) {
                 let elem = document.createElement('div');
                 elem.setAttribute('id', id);
-                elem.setAttribute('class', id);
+                elem.setAttribute('class', cls);
                 document.getElementById(idToAppend).appendChild(elem);
                 elem.innerHTML = innerH;
             }
         }
 
-        renderField('selected_title', 'container', 'title', `<p>${this.title}</p>`);
-        renderField('selected_sub', 'container', 'subtitle', `Subtitle: ${this.subtitle}`);
-        renderField('selected_auth', 'container', 'author', `Author: ${this.author}`);
-        renderField('selected_langs', 'container', 'langs', `This book is available in following languages: ${this.langs}`);
+        renderField('selected_title', 'select__selected_title',  'container', 'title', `<p>${this.title}</p>`);
+        renderField('selected_sub', 'select__selected_sub', 'container', 'subtitle', `Subtitle: ${this.subtitle}`);
+        renderField('selected_auth','select__selected_auth', 'container', 'author', `Author: ${this.author}`);
+        renderField('selected_langs', 'select__selected_langs', 'container', 'langs', `This book is available in following languages: ${this.langs}`);
 
         let renderText = document.createElement('div');
         renderText.setAttribute('id', 'selected_text');
-        renderText.setAttribute('class', 'selected_text');
+        renderText.setAttribute('class', 'select__selected_text');
         document.getElementById('container').appendChild(renderText);
         if (this.fText == true) {
             renderText.innerHTML = 'Full text is available';
@@ -170,12 +170,12 @@ class Book {
         }
         ;
 
-        renderField('selected_fp', 'container', 'firstPublished', `First published: ${this.firstPublished}`);
-        renderField('selected_yrs', 'container', 'yrsPublished', `Was published in ${this.yrsPublished}`);
+        renderField('selected_fp','select__selected_fp', 'container', 'firstPublished', `First published: ${this.firstPublished}`);
+        renderField('selected_yrs','select__selected_yrs', 'container', 'yrsPublished', `Was published in ${this.yrsPublished}`);
 
         let addToReadList = document.createElement('button');
         addToReadList.setAttribute('id', 'add-btn');
-        addToReadList.setAttribute('class', 'add-btn');
+        addToReadList.setAttribute('class', 'select__add-btn');
         document.getElementById('container').appendChild(addToReadList);
         addToReadList.innerHTML = 'Add to read list';
         addToReadList.addEventListener('click', addBtn);
