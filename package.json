@@ -1,0 +1,11 @@
+{
+  "name": "DataArt_bookshelf",
+  "version": "1.0.0",
+  "description": "A final DataArt task",
+  "scripts": {
+    "start": "harp server --port $PORT"
+  },
+  "dependencies": {
+    "harp": "*"
+  }
+}
